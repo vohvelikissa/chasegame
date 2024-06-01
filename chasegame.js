@@ -30,14 +30,28 @@ function moveZombies() {
 	for (var i = 0; i < zombiePosXs.length; i++) {
 		if(zombiePosYs[i] > playerPosY) {
 			zombiePosYs[i] -= 10;
+			zombieDirection[i] = "up";
 		} else if (zombiePosYs < playerPosY) {
 			zombiePosYs[i] += 10;
+			zombieDirection[i] = "down";
 		} else {
 			if (zombiePosXs[i] > playerPosX) {
 				zombiePosXs[i] -= 10;
+				zombieDirection[i] = "left";
 			} else if (zombiePosXs[i] < playerPosX) {
 				zombiePosXs[i] += 10;
+				zombieDirection[i] = "right";
 			}
+		}
+	}
+	checkCollision();
+}
+
+function checkCollision() {
+	for (var i = 0; i < zombiePosXs.length; i++) {
+		if(zombiePosXs[i] == playerPosX && zombiePosYs[i] == playerPosY) {
+			alert("you lost with "+movements+" moves");
+			canvas.style.visibility = "hidden";
 		}
 	}
 }
