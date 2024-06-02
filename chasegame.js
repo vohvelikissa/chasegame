@@ -6,6 +6,11 @@ const pinkkuUp = new Image();
 pinkkuUp.src = "./pinkku_up.png";
 const pinkkuDown = new Image();
 pinkkuDown.src = "./pinkku_down.png";
+const pinkkuRight = new Image();
+pinkkuRight.src = "./pinkku_right.png";
+const pinkkuLeft = new Image();
+pinkkuLeft.src = "./pinkku_left.png";
+
 //zombie sprites
 //map sprites
 
@@ -33,30 +38,39 @@ function whichDirectionalPinkkuToDisplay(direction) {
 		return pinkkuUp;
 	} else if (lastDirection == "down") {
 		return pinkkuDown;
+	} else if (lastDirection == "right") {
+		return pinkkuRight;
+	} else if (lastDirection == "left") {
+		return pinkkuLeft;
 	}
 	return pinkkuDown;
 }
 
 function spawnZombie() {
-	zombiePosXs.push(250);
-	zombiePosYs.push(250);
+	zombiePosXs.push(Math.random() * 420);
+	zombiePosYs.push(Math.random() * 420);
 	zombieDirection.push(1);
+}
+
+function zombieSpeed(zmin, zmax) {
+	return Math.random() * zmax;
 }
 
 function moveZombies() {
 	for (var i = 0; i < zombiePosXs.length; i++) {
+		var speed = zombieSpeed(0, 20);
 		if(zombiePosYs[i] > playerPosY) {
-			zombiePosYs[i] -= 10;
+			zombiePosYs[i] -= speed;
 			zombieDirection[i] = "up";
 		} else if (zombiePosYs < playerPosY) {
-			zombiePosYs[i] += 10;
+			zombiePosYs[i] += speed;
 			zombieDirection[i] = "down";
 		} else {
 			if (zombiePosXs[i] > playerPosX) {
-				zombiePosXs[i] -= 10;
+				zombiePosXs[i] -= speed;
 				zombieDirection[i] = "left";
 			} else if (zombiePosXs[i] < playerPosX) {
-				zombiePosXs[i] += 10;
+				zombiePosXs[i] += speed;
 				zombieDirection[i] = "right";
 			}
 		}
@@ -69,6 +83,15 @@ function checkCollision() {
 		if(zombiePosXs[i] == playerPosX && zombiePosYs[i] == playerPosY) {
 			alert("you lost with "+movements+" moves");
 			canvas.style.visibility = "hidden";
+		} else {
+			var xdiff = zombiePosXs[i] - playerPosX;
+			if (xdiff < 0) { xdiff = xdiff * -1 }
+			var ydiff = zombiePosYs[i] - playerPosY;
+			if (ydiff < 0) { ydiff = ydiff * -1 }
+			if (ydiff <= 50 && xdiff <= 50) {
+				alert("you lost with "+movements+" moves");
+				canvas.style.visibility = "hidden";
+			}
 		}
 	}
 }
