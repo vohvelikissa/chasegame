@@ -12,6 +12,9 @@ const pinkkuLeft = new Image();
 pinkkuLeft.src = "./pinkku_left.png";
 
 //zombie sprites
+const zombieUp = new Image();
+zombieUp.src = "./zombie_up.png";
+
 //map sprites
 
 var playerPosX = 250;
@@ -29,8 +32,7 @@ function game() {
 	ctx.fillRect(0, 0, 500, 500);
 	ctx.drawImage(whichDirectionalPinkkuToDisplay(lastDirection), playerPosX, playerPosY);
 	for (var i = 0; i < zombiePosXs.length; i++) {
-		ctx.fillStyle = "purple";
-		ctx.fillRect(zombiePosXs[i], zombiePosYs[i], 75, 75);
+		ctx.drawImage(zombieUp, zombiePosXs[i], zombiePosYs[i]);
 	}
 }
 
