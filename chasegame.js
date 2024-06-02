@@ -22,6 +22,7 @@ var movements = 1;
 var zombiePosXs = [];
 var zombiePosYs = [];
 var zombieDirection = [];
+var spawninterval = 15;
 
 function game() {
 	ctx.fillStyle = "green";
@@ -132,8 +133,11 @@ function movePlayer(move) {
 	}
 
 	moveZombies();
-	if(movements % 15 == 0) {
+	if(movements % spawninterval == 0) {
 		spawnZombie();
+		if(spawninterval > 2) {
+			spawninterval -= 1;
+		}
 	}
 	movements+=1;
 	game();
