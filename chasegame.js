@@ -1,5 +1,14 @@
 const canvas = document.getElementById("chasegame");
 const ctx = canvas.getContext("2d");
+
+//pinkku sprites
+const pinkkuUp = new Image();
+pinkkuUp.src = "./pinkku_up.png";
+const pinkkuDown = new Image();
+pinkkuDown.src = "./pinkku_down.png";
+//zombie sprites
+//map sprites
+
 var playerPosX = 250;
 var playerPosY = 250;
 var lastDirection = "right";
@@ -12,12 +21,20 @@ var zombieDirection = [];
 function game() {
 	ctx.fillStyle = "green";
 	ctx.fillRect(0, 0, 500, 500);
-	ctx.fillStyle = "black";
-	ctx.fillRect(playerPosX, playerPosY, 75, 75);
+	ctx.drawImage(whichDirectionalPinkkuToDisplay(lastDirection), playerPosX, playerPosY);
 	for (var i = 0; i < zombiePosXs.length; i++) {
 		ctx.fillStyle = "purple";
 		ctx.fillRect(zombiePosXs[i], zombiePosYs[i], 75, 75);
 	}
+}
+
+function whichDirectionalPinkkuToDisplay(direction) {
+	if (lastDirection == "up") {
+		return pinkkuUp;
+	} else if (lastDirection == "down") {
+		return pinkkuDown;
+	}
+	return pinkkuDown;
 }
 
 function spawnZombie() {
@@ -60,15 +77,19 @@ function movePlayer(move) {
 	if (move == 1) {
 		playerPosY -= 10;
 		console.log(playerPosX, playerPosY);
+		lastDirection = "up";
 	} else if (move == 2) {
 		playerPosX += 10;
 		console.log(playerPosX, playerPosY);
+		lastDirection = "right";
 	} else if (move == 3) {
 		playerPosY += 10;
 		console.log(playerPosX, playerPosY);
+		lastDirection = "down";
 	} else if (move == 4) {
 		playerPosX -= 10;
 		console.log(playerPosX, playerPosY);
+		lastDirection = "left";
 	}
 
 	if (playerPosX >= 430) {
